@@ -13,11 +13,14 @@
     <form action="{{route('member.store')}}" method="post">
     @csrf
         <h2>会員登録</h2>
-        <input type="text" name="name" placeholder="名前" class="form-control">
+        @foreach ($errors->all() as $error)
+                <p>{{ $error }}</p>
+        @endforeach
+        <input type="text" name="name" placeholder="名前" class="form-control" value="{{old('name')}}">
         <br>
-        <input type="tel" name="tel" placeholder="電話番号" class="form-control">
+        <input type="tel" name="tel" placeholder="電話番号" class="form-control" value="{{old('tel')}}">
         <br>
-        <input type="email" name="email"  placeholder="メールアドレス" class="form-control">
+        <input type="email" name="email"  placeholder="メールアドレス" class="form-control" value="{{old('email')}}">
         <br>
         <input type="submit" value="登録" class="btn btn-dark w-100">
     </form>

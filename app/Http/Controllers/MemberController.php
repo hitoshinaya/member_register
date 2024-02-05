@@ -30,11 +30,20 @@ class MemberController extends Controller
     *
     */
     public function store(Request $request){
-        $members = Member::create([
-            'name' => $request->name,
-            'tel' => $request->tel,
-            'email' => $request->email
+        $validated = $request->validate([
+            'name' => 'bail|required|max:255',
+            'tel' => 'required|max:13',
+            //'email' => 'required|max:255',
+            //email:dns実在しないドメイン名のアドレス弾く
+            'email' => 'required|email:dns',
         ]);
+        
+        $members = Member::create($validated);
+        // $members = Member::create([
+        //     'name' => $request->name,
+        //     'tel' => $request->tel,
+        //     'email' => $request->email
+        // ]);
 
         return back();
     }
